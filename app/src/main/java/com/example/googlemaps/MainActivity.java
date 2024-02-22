@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -49,24 +50,44 @@ public class MainActivity extends FragmentActivity
         mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         mapa.getUiSettings().setZoomControlsEnabled(true);
 
+        LatLng[] coordenadaFacultad = {
+                new LatLng(-1.012621359551321, -79.47048732760969),
+                new LatLng(-1.012871436462689, -79.46931050837884),
+                new LatLng(-1.0129572537450988, -79.46881027640472),
+                new LatLng(-1.0123028969666923, -79.46883173408457),
+        };
+        float[] coloresMarcadores = {
+                BitmapDescriptorFactory.HUE_RED,
+                BitmapDescriptorFactory.HUE_RED,
+                BitmapDescriptorFactory.HUE_RED,
+                BitmapDescriptorFactory.HUE_RED
+        };
+
         CameraUpdate camUpd1 =
                 CameraUpdateFactory
-                       .newLatLngZoom(new LatLng(-1.01225, -79.46974), 18);
+                       .newLatLngZoom(coordenadaFacultad[2], 18);
         mapa.moveCamera(camUpd1);
         mapa.setOnMapClickListener(this);
+        String[][] infoMarcadores = {
+                {"AUDITORIO UTEQ"
+                        ,"@drawable/auditoriouteq"},
 
-        //LatLng madrid = new LatLng(-1.01225, -79.46974);
-        //CameraPosition camPos = new CameraPosition.Builder()
-                //.target(madrid)
-                //.zoom(20)
-                //.bearing(45) //noreste arriba
-                //.tilt(50) //punto de vista de la cámara 70 grados
-                //.build();
-        //CameraUpdate camUpd3 =
-                //CameraUpdateFactory.newCameraPosition(camPos);
-        //mapa.animateCamera(camUpd3);
-        //mapa.setOnMapClickListener(this);
+                {"POSGRADO"
+                        , "@drawable/postgrado"},
 
+                {"TICS"
+                        , "@drawable/tics"},
+
+                {"BIBLIOTECA"
+                        , "@drawable/biblioteca"}
+        };
+        for (int i=0; i<infoMarcadores.length; i++) {
+            int indiceColor = i % coloresMarcadores.length;
+            marcadorFacultad(coordenadaFacultad[i], infoMarcadores[i][0], coloresMarcadores[indiceColor]);
+        }
+    }
+
+    private void marcadorFacultad(LatLng latLng, String s, float coloresMarcadore) {
     }
 
     @Override
